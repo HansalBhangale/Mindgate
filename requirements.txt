@@ -1,0 +1,11 @@
+python-dotenv
+google-cloud-bigquery
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchain-text-splitters
+pypdf
+faiss-cpu
+pandas
+db-dtypes
