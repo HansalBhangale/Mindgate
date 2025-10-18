@@ -96,8 +96,26 @@ class BigQueryChain:
             query_result = self._execute_query(sql_query)
             
             # Format the response
-            response = f"I found this information:\n\n```sql\n{sql_query}\n```\n\nResult:\n```\n{query_result}\n```"
-            
+            # ✅ Conversational summarization logic
+            summary_prompt = ChatPromptTemplate.from_messages([
+                ("system", """
+                You are a helpful data assistant. Explain the database result conversationally.
+                If it looks like a table, show the table in clear format.
+                If it's just one value, answer directly in a single friendly sentence.
+                Avoid SQL code blocks or technical formatting.
+                """),
+                ("human", "Question: {question}\nResult: {result}")
+            ])
+
+            summary_chain = summary_prompt | self.llm
+            summary = summary_chain.invoke({
+                "question": query,
+                "result": query_result
+            }).content
+
+            # Final assistant message
+            response = summary
+            messages.append(AIMessage(content=response))            
             # Add the assistant's response to the conversation history
             messages.append(AIMessage(content=response))
             

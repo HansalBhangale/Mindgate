@@ -1,7 +1,5 @@
-.venv
+.venv/
+__pycache__/
 .env
-data
-
-__pycache__
-
-vector_store_openai
+data/
+vector_store_openai/
