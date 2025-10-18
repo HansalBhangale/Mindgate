@@ -19,7 +19,7 @@ def main():
     pdf_assistant = PDFRAGChain()
 
     print("\n✅ Chatbot is ready!")
-    print("--- Welcome to the Hybrid Data Chatbot ---")
+    print("--- Welcome to the Chatbot ---")
     print("I can answer questions about customer data from BigQuery or about UPI from a PDF.")
     print("Type 'exit' to quit.")
 

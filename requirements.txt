@@ -10,3 +10,4 @@ faiss-cpu
 pandas
 db-dtypes
 langgraph
+streamlit

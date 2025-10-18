@@ -128,16 +128,18 @@ class PDFRAGChain:
         
         return {"messages": [*state["messages"], response]}
         
-    def run(self, query: str, conversation_history: Sequence[BaseMessage]) -> Tuple[str, Sequence[BaseMessage]]:
+    def run(self, query: str, conversation_history: Sequence[BaseMessage], return_full_history: bool = True) -> Any:
         """
         Process a user query about UPI using the PDF RAG system.
         
         Args:
             query: The user's query about UPI (Note: this is for compatibility, the actual message is the last one in conversation_history)
             conversation_history: List of messages in the conversation, including the latest user query.
+            return_full_history: If True, return answer and full history. If False, return only the answer.
             
         Returns:
-            Tuple of (answer: str, updated_messages: List[BaseMessage])
+            If return_full_history is True: Tuple of (answer: str, updated_messages: List[BaseMessage])
+            If return_full_history is False: answer: str
         """
         # The conversation_history from app.py already contains the new user query.
         state = {
@@ -151,8 +153,11 @@ class PDFRAGChain:
         
         # Extract the last message (assistant's response)
         answer = result["messages"][-1].content
-        
-        return answer, result["messages"]
+
+        if return_full_history:
+            return answer, result["messages"]
+        else:
+            return answer
         
     @property
     def workflow(self):
